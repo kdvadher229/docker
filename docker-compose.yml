@@ -3,7 +3,7 @@ services:
   server:
     build:
       dockerfile: Dockerfile
-      context: ./
+      context: ./api
     volumes:
       - /app/node_modules
       - ./:/app
@@ -26,10 +26,10 @@ services:
   client:
     build:
       dockerfile: Dockerfile
-      context: ../frontend
+      context: ./frontend
     volumes:
       - /app/node_modules
-      - ../frontend:/app
+      - ./frontend:/app
     ports:
       - 4200:4200
     networks:
