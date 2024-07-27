@@ -1,0 +1,44 @@
+version: '3'
+services:
+  server:
+    build:
+      dockerfile: Dockerfile
+      context: ./
+    volumes:
+      - /app/node_modules
+      - ./:/app
+    restart: always
+    ports:
+      - 3000:3000
+    networks:
+      - app-network
+    container_name: aubergineoperations
+
+  nginx:
+    image: nginx:alpine
+    ports:
+      - 84:85
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/sites-available:/etc/nginx/sites-available
+      - ./nginx/sites-enabled:/etc/nginx/sites-enabled
+    networks:
+      - app-network
+    container_name: nginxwebserver
+  client:
+    build:
+      dockerfile: Dockerfile
+      context: ../frontend
+    volumes:
+      - /app/node_modules
+      - ../frontend:/app
+    ports:
+      - 4200:4200
+    networks:
+      - app-network
+    depends_on:
+      - server
+    container_name: aubergineoperationsfrontend
+networks:
+  app-network:
+    driver: bridge
