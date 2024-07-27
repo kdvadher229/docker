@@ -1,0 +1,12 @@
+# Use the official Nginx image as the base image
+FROM nginx:alpine
+
+# Copy Nginx configuration files into the container
+COPY nginx/sites-available /etc/nginx/sites-available
+COPY nginx/sites-enabled /etc/nginx/sites-enabled
+
+# Create a symbolic link from sites-available to sites-enabled
+RUN ln -s /etc/nginx/sites-available/my_custom_site.conf /etc/nginx/sites-enabled/my_custom_site.conf
+
+# Expose the port that Nginx will use
+EXPOSE 83
