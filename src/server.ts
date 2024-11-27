@@ -26,13 +26,6 @@ class Server {
 
       console.log("first");
     });
-
-    // Route with potential lack of error handling, CodeQL might flag this
-    this.app.get("/error-prone", (req: Request, res: Response) => {
-      // Potentially error-prone code without proper try-catch handling
-      const riskyData = JSON.parse(req.query.data as string); // Assume data is not validated
-      return res.send(riskyData);
-    });
   }
 
   public start() {
